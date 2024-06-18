@@ -1,5 +1,10 @@
 <?php
 
+if (!session_start()) {
+	echo "Unauthorized access! Please <a href='./login.php'>log in</a>!";
+	return;
+}
+
 use Dotenv\Dotenv;
 
 require './vendor/autoload.php';

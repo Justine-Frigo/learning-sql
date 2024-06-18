@@ -1,4 +1,8 @@
 <?php
+if (!session_start()) {
+	echo "Unauthorized access! Please <a href='./login.php'>log in</a>!";
+	return;
+}
 
 use Dotenv\Dotenv;
 
@@ -59,7 +63,8 @@ if (isset($_POST['button'])) {
 </head>
 
 <body>
-	<!-- <a href="./read.php">Data list</a> -->
+<a href="logout.php">Se déconnecter</a>
+
 	<h1>Update</h1>
 	<form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
 		<div>
