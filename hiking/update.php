@@ -1,12 +1,16 @@
 <?php
-if (!session_start()) {
-	echo "Unauthorized access! Please <a href='./login.php'>log in</a>!";
-	return;
-}
 
 use Dotenv\Dotenv;
 
 require './vendor/autoload.php';
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+	echo "Unauthorized access! Please <a href='./login.php'>log in</a>!";
+	return;
+}
+
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();

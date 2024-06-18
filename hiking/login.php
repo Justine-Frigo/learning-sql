@@ -13,30 +13,30 @@ $url = "mysql:host=" . $_ENV["DB_HOST"] . ";dbname=" . $_ENV["DB_NAME"];
 if (isset($_POST['username']) && isset($_POST['password'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
-  echo $username;
+
 
   // Prepare a SELECT statement to retrieve the user's credentials from the database
 
   try {
-		$database = new PDO($url, $_ENV["PASSWORD"], $_ENV["PASSWORD"]);
-		$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $database = new PDO($url, $_ENV["PASSWORD"], $_ENV["PASSWORD"]);
+    $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$statement = $database->prepare("SELECT * FROM user WHERE username = :username");
+    $statement = $database->prepare("SELECT * FROM user WHERE username = :username");
     $statement->bindParam(':username', $username);
     $statement->execute();
 
-  // Fetch the user's data from the database
-  $user = $statement->fetch();
-
-} catch (PDOException $error) {
-		print_r($error->getMessage());
+    // Fetch the user's data from the database
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+  } catch (PDOException $error) {
+    print_r($error->getMessage());
   }
+
   // Check if the user's input matches the credentials stored in the database
   if ($user && ($password == $user['password'])) {
     // The user's input is valid, log them in
     session_start();
     $_SESSION['user_id'] = $user['id'];
-    header('Location: create.php');
+    header('Location: read.php');
     exit();
   } else {
     // The user's input is not valid, show an error message
