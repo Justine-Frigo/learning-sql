@@ -32,7 +32,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
   }
 
   // Check if the user's input matches the credentials stored in the database
-  if ($user && ($password == $user['password'])) {
+  if ($user && password_verify($password, $user['password'])) {
     // The user's input is valid, log them in
     session_start();
     $_SESSION['user_id'] = $user['id'];
@@ -40,7 +40,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     exit();
   } else {
     // The user's input is not valid, show an error message
-    echo "Invalid username or password";
+    echo "Invalid username or password ";
   }
 }
 
